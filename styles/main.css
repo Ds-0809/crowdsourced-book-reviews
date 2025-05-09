@@ -187,3 +187,25 @@ footer {
         grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     }
 }
+/* Book Details Page */
+#book-details img {
+    max-height: 500px;
+    width: auto;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.details {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+/* Reviews */
+.review-card {
+    transition: transform 0.2s;
+}
+
+.review-card:hover {
+    transform: translateY(-3px);
+}
