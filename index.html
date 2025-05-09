@@ -1,33 +1,44 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Crowdsourced Book Reviews</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BookCritic | Crowdsourced Reviews</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="styles/main.css">
 </head>
 <body>
     <header>
-        <h1>Book Review Platform</h1>
-        <button id="github-login">Login with GitHub</button>
+        <div class="container">
+            <h1><i class="fas fa-book-open"></i> BookCritic</h1>
+            <p class="tagline">Honest reviews by readers like you</p>
+        </div>
     </header>
-    
-    <main>
-        <section id="book-list">
-            <!-- Books will be listed here -->
+
+    <main class="container">
+        <section class="cta-box">
+            <h2>Share Your Thoughts</h2>
+            <p>Contribute to our growing library of book reviews</p>
+            <button id="contribute-btn"><i class="fab fa-github"></i> Submit via GitHub</button>
+            <div class="steps" id="steps-guide">
+                <!-- Filled by JavaScript -->
+            </div>
         </section>
-        
-        <section id="contribute">
-            <h2>Contribute a Review</h2>
-            <p>Submit your review via GitHub pull request!</p>
-            <button id="submit-review">How to Submit</button>
+
+        <section class="featured-books">
+            <h2><i class="fas fa-star"></i> Recently Reviewed</h2>
+            <div class="books-grid" id="books-container">
+                <!-- Filled by JavaScript -->
+            </div>
         </section>
     </main>
-    
+
+    <footer>
+        <p>Made with <i class="fas fa-heart"></i> by book lovers worldwide</p>
+    </footer>
+
     <script src="scripts/main.js"></script>
-    <button onclick="showGuide()">How to Submit a Review</button>
-<script>
-function showGuide() {
-    alert("1. Fork this repo\n2. Add a review file\n3. Submit a Pull Request!");
-}
-</script>
 </body>
 </html>
+   
