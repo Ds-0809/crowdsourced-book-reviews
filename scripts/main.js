@@ -97,3 +97,8 @@ async function loadBook(bookId) {
   document.getElementById('book-description').textContent = book.description;
 }
 loadBook('harry-potter-1');
+// Replace the showBookDetail function with this:
+function showBookDetail(bookId) {
+    // Redirect to book details page with ID parameter
+    window.location.href = `book-details.html?id=${bookId}`;
+}
