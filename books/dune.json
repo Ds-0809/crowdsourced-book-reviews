@@ -1,0 +1,11 @@
+{
+  "id": "dune",
+  "title": "Dune",
+  "author": "Frank Herbert",
+  "cover_image": "https://m.media-amazon.com/images/I/81ym3QUd3KL._AC_UF1000,1000_QL80_.jpg",
+  "description": "A sweeping epic of politics, religion, and ecology set on the desert planet Arrakis, where control of the spice melange means control of the universe.",
+  "genre": ["Science Fiction", "Adventure"],
+  "published_year": 1965,
+  "pages": 412,
+  "isbn": "9780441172719"
+}
