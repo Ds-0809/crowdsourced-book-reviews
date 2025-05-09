@@ -1,0 +1,11 @@
+{
+  "id": "harry-potter-1",
+  "title": "Harry Potter and the Sorcerer's Stone",
+  "author": "J.K. Rowling",
+  "cover_image": "https://m.media-amazon.com/images/I/81m1s4wIPML._AC_UF1000,1000_QL80_.jpg",
+  "description": "Harry Potter, an orphaned boy, discovers he's a wizard and begins his education at Hogwarts School of Witchcraft and Wizardry, uncovering a magical world and his own destiny.",
+  "genre": ["Fantasy", "Adventure"],
+  "published_year": 1997,
+  "pages": 309,
+  "isbn": "9780590353427"
+}
