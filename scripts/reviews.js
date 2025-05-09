@@ -154,3 +154,137 @@ function reportReview(reviewId) {
   console.log('Reported review:', reviewId);
   // Implement reporting functionality
 }
+document.addEventListener('DOMContentLoaded', async () => {
+  const bookId = getBookIdFromUrl();
+  if (!bookId) return;
+  
+  await loadAndDisplayReviews(bookId);
+  setupSorting();
+});
+
+function getBookIdFromUrl() {
+  const params = new URLSearchParams(window.location.search);
+  return params.get('id');
+}
+
+async function loadAndDisplayReviews(bookId) {
+  const container = document.getElementById('reviews-list');
+  const emptyState = document.getElementById('no-reviews');
+  
+  try {
+    // Show loading state
+    container.innerHTML = `
+      <div class="loading-state">
+        <div class="spinner"></div>
+        <p>Loading reviews...</p>
+      </div>
+    `;
+    
+    // Fetch reviews from GitHub
+    const reviews = await fetchReviewsForBook(bookId);
+    
+    if (reviews.length > 0) {
+      renderReviews(reviews);
+      emptyState.classList.add('hidden');
+    } else {
+      container.innerHTML = '';
+      emptyState.classList.remove('hidden');
+    }
+  } catch (error) {
+    console.error('Error loading reviews:', error);
+    container.innerHTML = `
+      <div class="error-state">
+        <i class="fas fa-exclamation-triangle"></i>
+        <p>Failed to load reviews. Please try again later.</p>
+        <button onclick="location.reload()">Retry</button>
+      </div>
+    `;
+  }
+}
+
+async function fetchReviewsForBook(bookId) {
+  // Fetch from your GitHub repository
+  const response = await fetch(`https://api.github.com/repos/YOUR_USERNAME/YOUR_REPO/contents/reviews`);
+  const files = await response.json();
+  
+  // Filter and process reviews for this book
+  const reviews = [];
+  for (const file of files) {
+    if (file.name.includes(bookId) && file.name.endsWith('.json')) {
+      const reviewResponse = await fetch(file.download_url);
+      const review = await reviewResponse.json();
+      reviews.push({
+        ...review,
+        date: new Date(review.date).toISOString().split('T')[0]
+      });
+    }
+  }
+  
+  return reviews.sort((a, b) => new Date(b.date) - new Date(a.date));
+}
+
+function renderReviews(reviews) {
+  const container = document.getElementById('reviews-list');
+  container.innerHTML = '';
+  
+  reviews.forEach(review => {
+    const reviewElement = document.createElement('div');
+    reviewElement.className = 'review-card';
+    reviewElement.innerHTML = `
+      <div class="review-header">
+        <div class="reviewer-info">
+          <img src="https://github.com/${review.reviewer}.png?size=40" 
+               alt="${review.reviewer}" 
+               class="reviewer-avatar">
+          <span>${review.reviewer}</span>
+        </div>
+        <div class="rating-stars">
+          ${'★'.repeat(review.rating)}${'☆'.repeat(5 - review.rating)}
+        </div>
+      </div>
+      <div class="review-content">
+        ${review.review}
+      </div>
+      <div class="review-date">
+        Reviewed on ${review.date}
+      </div>
+    `;
+    container.appendChild(reviewElement);
+  });
+}
+
+function setupSorting() {
+  document.querySelectorAll('.sort-options button').forEach(button => {
+    button.addEventListener('click', function() {
+      // Remove active class from all buttons
+      document.querySelectorAll('.sort-options button').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      
+      // Add active class to clicked button
+      this.classList.add('active');
+      
+      // Get current reviews
+      const container = document.getElementById('reviews-list');
+      const reviews = Array.from(container.querySelectorAll('.review-card'));
+      
+      // Sort reviews based on selection
+      reviews.sort((a, b) => {
+        const aRating = parseInt(a.querySelector('.rating-stars').textContent.match(/★/g)?.length || 0);
+        const bRating = parseInt(b.querySelector('.rating-stars').textContent.match(/★/g)?.length || 0);
+        const aDate = new Date(a.querySelector('.review-date').textContent.split('on ')[1]);
+        const bDate = new Date(b.querySelector('.review-date').textContent.split('on ')[1]);
+        
+        switch(this.dataset.sort) {
+          case 'highest': return bRating - aRating;
+          case 'lowest': return aRating - bRating;
+          default: return bDate - aDate; // newest first
+        }
+      });
+      
+      // Re-append sorted reviews
+      container.innerHTML = '';
+      reviews.forEach(review => container.appendChild(review));
+    });
+  });
+}
