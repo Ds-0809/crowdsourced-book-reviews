@@ -297,3 +297,127 @@ footer {
     margin-top: 1rem;
     cursor: pointer;
 }
+/* Reviews Container */
+.reviews-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.review-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.sort-options {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sort-options button {
+  background: none;
+  border: none;
+  color: #7f8c8d;
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+.sort-options button.active {
+  background: #f0f3f5;
+  color: #2c3e50;
+  font-weight: 500;
+}
+
+/* Review Cards */
+.review-card {
+  background: #fff;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  border: 1px solid #eee;
+}
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.reviewer-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.reviewer-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.rating-stars {
+  color: #f1c40f;
+  font-size: 1.1rem;
+}
+
+.review-content {
+  color: #34495e;
+  line-height: 1.6;
+}
+
+.review-date {
+  color: #95a5a6;
+  font-size: 0.85rem;
+  margin-top: 1rem;
+  text-align: right;
+}
+
+/* Loading and Empty States */
+.loading-state {
+  text-align: center;
+  padding: 2rem;
+  color: #7f8c8d;
+}
+
+.spinner {
+  border: 3px solid rgba(0,0,0,0.1);
+  border-radius: 50%;
+  border-top: 3px solid #3498db;
+  width: 30px;
+  height: 30px;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 1rem;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: #95a5a6;
+}
+
+.empty-state i {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: #bdc3c7;
+}
+
+.hidden {
+  display: none;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
