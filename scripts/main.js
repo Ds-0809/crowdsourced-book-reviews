@@ -1,35 +1,89 @@
-async function loadBooks() {
-    const response = await fetch('books/example-book.json');
-    const book = await response.json();
-    
-    const bookList = document.getElementById('book-list');
-    bookList.innerHTML = `
-        <div class="book">
-            <h2>${book.title}</h2>
-            <p>By ${book.author}</p>
-            <img src="${book.cover_image}" width="100">
-            <p>${book.description}</p>
+// Sample book data (in real app, fetch from GitHub)
+const sampleBooks = [
+    {
+        id: "harry-potter",
+        title: "Harry Potter and the Sorcerer's Stone",
+        author: "J.K. Rowling",
+        cover: "https://m.media-amazon.com/images/I/81m1s4wIPML._AC_UF1000,1000_QL80_.jpg",
+        rating: 4.5,
+        reviewCount: 128
+    },
+    {
+        id: "dune",
+        title: "Dune",
+        author: "Frank Herbert",
+        cover: "https://m.media-amazon.com/images/I/81ym3QUd3KL._AC_UF1000,1000_QL80_.jpg",
+        rating: 4.8,
+        reviewCount: 95
+    }
+];
+
+// DOM Elements
+const booksContainer = document.getElementById('books-container');
+const stepsGuide = document.getElementById('steps-guide');
+const contributeBtn = document.getElementById('contribute-btn');
+
+// Display books
+function renderBooks() {
+    booksContainer.innerHTML = sampleBooks.map(book => `
+        <div class="book-card" onclick="showBookDetail('${book.id}')">
+            <img src="${book.cover}" alt="${book.title}">
+            <div class="book-info">
+                <h3>${book.title}</h3>
+                <p class="author">${book.author}</p>
+                <div class="rating">
+                    ${renderStars(book.rating)}
+                    <span>${book.rating} (${book.reviewCount} reviews)</span>
+                </div>
+            </div>
         </div>
+    `).join('');
+}
+
+// Display contribution steps (hidden until button click)
+function renderSteps() {
+    stepsGuide.innerHTML = `
+        <div class="step">
+            <span>1</span>
+            <p>Fork this repository on GitHub</p>
+        </div>
+        <div class="step">
+            <span>2</span>
+            <p>Create a new JSON file in <code>/reviews/</code></p>
+        </div>
+        <div class="step">
+            <span>3</span>
+            <p>Submit a Pull Request with your review</p>
+        </div>
+        <a href="https://github.com/YOUR-USERNAME/book-reviews/fork" target="_blank" class="github-link">
+            <i class="fab fa-github"></i> Go to GitHub
+        </a>
     `;
+    stepsGuide.style.display = 'none';
 }
-loadBooks();
-async function loadReviews() {
-    const response = await fetch('https://api.github.com/repos/[your-username]/book-reviews/contents/reviews');
-    const files = await response.json();
-    
-    files.forEach(async file => {
-        const reviewData = await fetch(file.download_url).then(res => res.json());
-        console.log(reviewData); // Display this in HTML
-    });
+
+// Star rating helper
+function renderStars(rating) {
+    const stars = [];
+    for (let i = 1; i <= 5; i++) {
+        stars.push(`<i class="fas fa-star ${i <= Math.floor(rating) ? 'filled' : ''} 
+                   ${i > Math.floor(rating) && i-0.5 <= rating ? 'half-filled' : ''}"></i>`);
+    }
+    return stars.join('');
 }
-loadReviews();
-async function loadReviews() {
-    const response = await fetch('https://api.github.com/repos/[your-username]/book-reviews/contents/reviews');
-    const files = await response.json();
-    
-    files.forEach(async file => {
-        const reviewData = await fetch(file.download_url).then(res => res.json());
-        console.log(reviewData); // Display this in HTML
-    });
+
+// Event Listeners
+contributeBtn.addEventListener('click', () => {
+    stepsGuide.style.display = stepsGuide.style.display === 'none' ? 'block' : 'none';
+});
+
+// Initialize
+document.addEventListener('DOMContentLoaded', () => {
+    renderBooks();
+    renderSteps();
+});
+
+// Future feature - book details
+function showBookDetail(bookId) {
+    alert(`Feature coming soon! Will show details for ${bookId}`);
 }
-loadReviews();
