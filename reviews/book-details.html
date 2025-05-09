@@ -1,0 +1,32 @@
+<section class="reviews-section">
+  <h2><i class="fas fa-comments"></i> Reader Reviews</h2>
+  
+  <!-- Review Sorting Controls -->
+  <div class="review-controls">
+    <div class="sort-options">
+      <span>Sort by:</span>
+      <button class="active" data-sort="newest">Newest</button>
+      <button data-sort="highest">Highest Rating</button>
+      <button data-sort="lowest">Lowest Rating</button>
+    </div>
+    <button class="add-review-btn" onclick="location.href='submit-review.html'">
+      <i class="fas fa-plus"></i> Add Your Review
+    </button>
+  </div>
+
+  <!-- Reviews Container -->
+  <div id="reviews-container">
+    <!-- Reviews will be loaded here dynamically -->
+    <div class="loading-spinner">
+      <div class="spinner"></div>
+      <p>Loading reviews...</p>
+    </div>
+  </div>
+
+  <!-- No Reviews Placeholder (hidden by default) -->
+  <div id="no-reviews" class="hidden">
+    <i class="far fa-comment-dots"></i>
+    <p>No reviews yet. Be the first to share your thoughts!</p>
+    <a href="submit-review.html" class="btn">Write a Review</a>
+  </div>
+</section>
