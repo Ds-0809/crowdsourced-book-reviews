@@ -14,7 +14,7 @@ async function loadReviews(bookId) {
     `;
 
     try {
-        const response = await fetch(`https://api.github.com/repos/YOUR_USERNAME/YOUR_REPO/contents/reviews`);
+        const response = await fetch(`https://api.github.com/repos/Ds-0809/crowdsourced-book-reviews/tree/main/reviews);
         const files = await response.json();
         
         const reviews = [];
@@ -148,7 +148,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 async function loadReviews(bookId) {
     try {
-        const response = await fetch(`https://api.github.com/repos/YOUR_USERNAME/YOUR_REPO/contents/reviews`);
+        const response = await fetch(`https://api.github.com/repos/Ds-0809/crowdsourced-book-reviews/tree/main/reviews`);
         const files = await response.json();
         
         // Filter and process reviews
