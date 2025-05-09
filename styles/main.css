@@ -209,3 +209,30 @@ footer {
 .review-card:hover {
     transform: translateY(-3px);
 }
+/* Reviews Section */
+.reviews-section {
+    border-top: 1px solid #eee;
+    padding-top: 2rem;
+}
+
+.review-card {
+    transition: all 0.3s ease;
+    height: 100%;
+}
+
+.review-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* Star Ratings */
+.text-warning {
+    color: #ffc107;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .review-card {
+        margin-bottom: 1.5rem;
+    }
+}
