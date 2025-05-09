@@ -87,3 +87,13 @@ document.addEventListener('DOMContentLoaded', () => {
 function showBookDetail(bookId) {
     alert(`Feature coming soon! Will show details for ${bookId}`);
 }
+// Example: Fetch and display Harry Potter data
+async function loadBook(bookId) {
+  const response = await fetch(`books/${bookId}.json`);
+  const book = await response.json();
+  
+  document.getElementById('book-title').textContent = book.title;
+  document.getElementById('book-cover').src = book.cover_image;
+  document.getElementById('book-description').textContent = book.description;
+}
+loadBook('harry-potter-1');
