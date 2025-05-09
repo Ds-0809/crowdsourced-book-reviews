@@ -44,6 +44,37 @@
   <h2 id="book-title"></h2>
   <p id="book-description"></p>
 </div>
+    <section class="reviews-container">
+  <h2><i class="fas fa-comments"></i> Reader Reviews</h2>
+  
+  <!-- Review Sorting Controls -->
+  <div class="review-controls">
+    <div class="sort-options">
+      <span>Sort by:</span>
+      <button class="active" data-sort="newest">Newest First</button>
+      <button data-sort="highest">Highest Rated</button>
+      <button data-sort="lowest">Lowest Rated</button>
+    </div>
+    <a href="submit-review.html?book=${bookId}" class="btn btn-primary">
+      <i class="fas fa-plus"></i> Add Review
+    </a>
+  </div>
+
+  <!-- Reviews will be loaded here -->
+  <div id="reviews-list">
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <p>Loading reviews...</p>
+    </div>
+  </div>
+
+  <!-- Empty state (hidden by default) -->
+  <div id="no-reviews" class="empty-state hidden">
+    <i class="far fa-comment-dots"></i>
+    <p>No reviews yet. Be the first to share your thoughts!</p>
+    <a href="submit-review.html?book=${bookId}" class="btn">Write a Review</a>
+  </div>
+</section>
 </body>
 </html>
    
