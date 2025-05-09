@@ -91,3 +91,100 @@ function renderReviews(reviews) {
 function submitReview() {
     window.location.href = `../submit-review.html?book=${new URLSearchParams(window.location.search).get('id')}`;
 }
+document.addEventListener('DOMContentLoaded', async () => {
+    const bookId = new URLSearchParams(window.location.search).get('id');
+    if (!bookId) return;
+    
+    await loadReviews(bookId);
+});
+
+async function loadReviews(bookId) {
+    try {
+        const response = await fetch(`https://api.github.com/repos/YOUR_USERNAME/YOUR_REPO/contents/reviews`);
+        const files = await response.json();
+        
+        // Filter and process reviews
+        const reviews = await Promise.all(
+            files.filter(file => 
+                file.name.includes(bookId) && 
+                file.name.endsWith('.json')
+            ).map(async file => {
+                const reviewRes = await fetch(file.download_url);
+                return await reviewRes.json();
+            })
+        );
+        
+        displayReviews(reviews.sort((a, b) => new Date(b.date) - new Date(a.date)));
+    } catch (error) {
+        console.error("Error loading reviews:", error);
+        displayError();
+    }
+}
+
+function displayReviews(reviews) {
+    const container = document.getElementById('reviews-container');
+    
+    if (reviews.length === 0) {
+        container.innerHTML = `
+            <div class="col-12">
+                <div class="alert alert-info">
+                    No reviews yet. Be the first to <a href="submit-review.html?book=${getBookId()}" class="alert-link">share your thoughts</a>!
+                </div>
+            </div>
+        `;
+        return;
+    }
+    
+    container.innerHTML = reviews.map(review => `
+        <div class="col-md-6">
+            <div class="card review-card h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between mb-3">
+                        <div>
+                            <img src="https://github.com/${review.reviewer}.png?size=40" 
+                                 alt="${review.reviewer}" 
+                                 class="rounded-circle me-2">
+                            <strong>${review.reviewer}</strong>
+                        </div>
+                        <div class="text-warning">
+                            ${generateStarIcons(review.rating)}
+                            <span class="text-muted ms-2">${review.rating}/5</span>
+                        </div>
+                    </div>
+                    <p class="card-text">${review.review}</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <small class="text-muted">
+                            <i class="far fa-calendar-alt"></i> ${review.date}
+                        </small>
+                        <a href="https://github.com/${review.reviewer}" 
+                           target="_blank" 
+                           class="btn btn-sm btn-outline-secondary">
+                            <i class="fab fa-github"></i> Profile
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+function generateStarIcons(rating) {
+    return '★'.repeat(Math.floor(rating)) + '☆'.repeat(5 - Math.floor(rating));
+}
+
+function displayError() {
+    document.getElementById('reviews-container').innerHTML = `
+        <div class="col-12">
+            <div class="alert alert-danger">
+                Failed to load reviews. Please try again later.
+                <button onclick="location.reload()" class="btn btn-sm btn-outline-danger ms-2">
+                    <i class="fas fa-sync-alt"></i> Retry
+                </button>
+            </div>
+        </div>
+    `;
+}
+
+function getBookId() {
+    return new URLSearchParams(window.location.search).get('id');
+}
